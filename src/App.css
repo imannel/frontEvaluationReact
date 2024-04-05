@@ -1,0 +1,20 @@
+body{
+  box-sizing: border-box ;
+}
+*{
+  margin: 0;
+}
+.nav-rooms{
+text-decoration:none;
+margin-right: 20px;
+color: aliceblue;
+}
+.nav-reservations{
+  text-decoration:none;
+  color: aliceblue;
+
+
+}
+.container-form{
+  padding:100px;
+}
