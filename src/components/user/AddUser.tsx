@@ -1,5 +1,4 @@
-import { faAddressCard } from '@fortawesome/free-solid-svg-icons';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { UserData } from '../../model/userData';
@@ -12,24 +11,27 @@ function AddUser() {
          cin:  "",
       });
       const navigate = useNavigate();
-      const handleChange = (event) => {
+
+      const handleChange = (event: { target: { name: any; value: any; }; }) => {
         const { name, value } = event.target;
         setUserInfo((prevUserInfo) => ({
           ...prevUserInfo,
           [name]: value,
         }));
       };
-      const handleSave = (event) => {
+
+      const handleSave = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         addUser(userInfo)
         .then(resp=>{alert("user has been added succefully."),navigate('/users')})
-                            .catch(err=>{console.log('err')})
+        .catch(err=>{console.log('err')})
                                   
         ;
         setUserInfo({
           name: '',
           email: '',
           cin: '',
+        
         });
       }
       return (

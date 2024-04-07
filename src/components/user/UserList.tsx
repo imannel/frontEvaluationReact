@@ -3,9 +3,10 @@ import { deleteUserById, getUsers, searchUsers } from "../../service/user";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserData } from "../../model/userData";
-import { faEdit, faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from "@fortawesome/free-solid-svg-icons/faStar";
 
 
 
@@ -29,12 +30,12 @@ function UserList() {
       })
   }
 
-  const handleDeleteRoom = (id: number) => {
+  const handleDeleteUser = (id: number) => {
     alert('Are you sure?')
     deleteUserById(id)
       .then(resp => {
-        const newRooms = users.filter(item => item.id !== id);
-        setUsers(newRooms);
+        const newUsers = users.filter(item => item.id !== id);
+        setUsers(newUsers);
       })
       .catch(err => {
         console.log(err);
@@ -53,7 +54,7 @@ function UserList() {
   }
   return (
     <Container className="my-4">
-    <h1 className="user-title mb-4">Users</h1>
+    <h1 className="user-title title mb-4">Users</h1>
     <Row>
       <Col md={6}>
         <Form onSubmit={handleSearch}>
@@ -92,8 +93,9 @@ function UserList() {
           <th>Name</th>
           <th>Email</th>
           <th>Cin</th>
-          <th>delete</th>
-          <th>Show book library</th>
+          <th>Delete</th>
+          <th>Show user library</th>
+          <th>Add Review</th>
         </tr>
       </thead>
       <tbody>
@@ -103,16 +105,21 @@ function UserList() {
       <td>{user.email}</td>
       <td>{user.cin}</td>
       <td>
-        <Button variant="danger" onClick={() => handleDeleteRoom(user.id)}>
+        <Button variant="danger" onClick={() => handleDeleteUser(user.id)}>
           <FontAwesomeIcon icon={faTrash} />
         </Button>
       </td>
+      
       <td>
-    <Button variant="primary" size="lg"  onClick={() => navigate(`/user-details-page/${user.id}`)}>
+    <Button variant="primary"   onClick={() => navigate(`/user-details-page/${user.id}`)}>
     <FontAwesomeIcon icon={faBook} className="mr-2" />
-
     </Button>
       </td>
+      <td>
+     <Button variant="warning" onClick={() => navigate(`/addReview/${user.id}`)}>
+      <FontAwesomeIcon icon={faStar} className="mr-2" />
+    </Button>
+    </td>
       
     </tr>
   ))}

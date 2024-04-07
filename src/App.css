@@ -1,20 +1,152 @@
 body{
   box-sizing: border-box ;
+
+  
+  
 }
 *{
   margin: 0;
 }
-.nav-rooms{
+.nav-users{
+  font-size: 20px;
+
 text-decoration:none;
 margin-right: 20px;
-color: aliceblue;
+color: rgb(229, 180, 137);
+font-family: "Bungee Spice", sans-serif;
+font-weight: 400;
+font-style: normal;
 }
-.nav-reservations{
+.nav-books{
+  font-size: 20px;
   text-decoration:none;
-  color: aliceblue;
-
-
+  color: rgb(229, 180, 137);
+  margin-right: 20px;
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.nav-reviews{
+  font-size: 20px;
+  text-decoration:none;
+  color: rgb(229, 180, 137);
+  margin-right: 20px;
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.nav-home{
+  font-size: 20px;
+  text-decoration:none;
+  color: rgb(229, 180, 137);
+  margin-right: 20px;
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 .container-form{
   padding:100px;
+}
+.card{
+  height: 300px;
+  width: 250px;
+  background-color: rgb(224, 178, 110);
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+  
+}
+.card--list{
+  display: flex;
+  justify-content: space-around;
+
+}
+.card-title{
+  margin-bottom: 10px;
+}
+.card-subtitle{
+  margin-bottom: 70px;
+  color: blueviolet;
+}
+.title{
+  margin-bottom: 30px;
+  margin-left: 30px;
+  margin-top: 10px;
+  color: rgb(28, 20, 13);
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  
+
+}
+.books-title{
+  margin-left: 30px;
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+}
+.conainer{
+  margin-left: 3Opx;
+}
+.logo{
+  width:100px;
+}
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: bisque;
+}
+
+
+
+body {
+  
+  background: linear-gradient(90deg,#d2d2d2,rgb(236, 159, 159));
+
+}
+
+.slider-thumb::before {
+  position: absolute;
+  content: " Welcome to Norsys Library";
+  left: 30%;
+  top: 20%;
+  width: 450px;
+  height: 450px;
+  background: #f7c6a0;
+  border-radius: 62% 47% 82% 35% / 45% 45% 80% 66%;
+  will-change: border-radius, transform, opacity;
+  animation: sliderShape 5s linear infinite;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+  font-size: 2rem; 
+  font-weight: bold;
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  z-index: -1;
+  -webkit-animation: sliderShape 5s linear infinite;
+  color: #a45210;
+}
+@keyframes sliderShape{
+  0%,100%{
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: translate3d(0,0,0) rotateZ(0.01deg);
+  }
+  34%{
+      border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+    transform:  translate3d(0,5px,0) rotateZ(0.01deg);
+  }
+  50%{
+    transform: translate3d(0,0,0) rotateZ(0.01deg);
+  }
+  67%{
+    border-radius: 100% 60% 60% 100% / 100% 100% 60% 60% ;
+    transform: translate3d(0,-3px,0) rotateZ(0.01deg);
+  }
 }

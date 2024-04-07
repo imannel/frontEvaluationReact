@@ -1,13 +1,13 @@
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { faEdit, faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteBookById, getBooks, searchBooks } from "../../service/book";
 import { BookData } from "../../model/bookData";
 
 function bookList() {
-  const [books, setbooks] = useState<BookData[]>([]);
+  const [books, setBooks] = useState<BookData[]>([]);
 
   const [query, setQuery] = useState("");
 
@@ -19,19 +19,19 @@ function bookList() {
     getBooks()
       .then(resp => {
         const books = resp.data;
-        setbooks(books);
+        setBooks(books);
       })
       .catch(err => {
         console.log(err);
       })
   }
 
-  const handleDeleteRoom = (id: number) => {
+  const handleDeleteBook = (id: number) => {
     alert('Are you sure?')
     deleteBookById(id)
       .then(resp => {
-        const newRooms = books.filter(item => item.id !== id);
-        setbooks(newRooms);
+        const newBooks = books.filter(item => item.id !== id);
+        setBooks(newBooks);
       })
       .catch(err => {
         console.log(err);
@@ -42,7 +42,7 @@ function bookList() {
     searchBooks(query)
       .then((resp) => {
         const searchedBooks= resp.data;
-        setbooks(searchedBooks);
+        setBooks(searchedBooks);
       })
       .catch((err) => {
         console.log(err);
@@ -91,7 +91,7 @@ function bookList() {
           <th>summary</th>
           <th>genre</th>
           <th>delete</th>
-          <th></th>
+          
         </tr>
       </thead>
       <tbody>
@@ -102,7 +102,7 @@ function bookList() {
       <td>{book.summary}</td>
       <td>{book.genre}</td>
       <td>
-        <Button variant="danger" onClick={() => handleDeleteRoom(book.id)}>
+        <Button variant="danger" onClick={() => handleDeleteBook(book.id)}>
           <FontAwesomeIcon icon={faTrash} />
         </Button>
       </td>

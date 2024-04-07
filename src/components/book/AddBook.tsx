@@ -31,7 +31,6 @@ function Addbook() {
       })
       .catch((err) => {
         console.error('Error adding book:', err);
-        // Ajoutez une logique pour gérer l'erreur ici
       });
 
     setBookInfo({

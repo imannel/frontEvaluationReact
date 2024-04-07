@@ -1,36 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUserLibraryById } from '../../service/user';
 import { UserLibrary } from '../../model/userLibrary';
 import { Button, Col, Form, Row, Table } from 'react-bootstrap';
 import { BookData } from '../../model/bookData';
-import { faEdit, faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getBooks, searchBooks } from '../../service/book';
+import { addBookToUserLibrary, getBooks, searchBooks } from '../../service/book';
+import { Alert } from 'react-bootstrap';
+import Cards from './Cards';
+
 
 function UserDetailsPage() {
-  const { id } = useParams();
-  const [userLibrary, setUserLibrary] = useState<UserLibrary>();
+  const { id} = useParams();
+  const [userLibrary, setUserLibrary] = useState<UserLibrary>(
+   {
+    user: { name: "",
+      email: "",
+      cin:"",},
+    books:[] }
+  );
   const [books, setBooks] = useState<BookData[]>([]);
   const [query, setQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Récupérer la bibliothèque de l'utilisateur
-        const libraryResponse = await getUserLibraryById(id);
-        setUserLibrary(libraryResponse.data);
-
-        // Récupérer la liste des livres
-        const booksResponse = await getBooks();
-        setBooks(booksResponse.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchData();
   }, [id]);
+
+  const fetchData = async () => {
+    try {
+      const libraryResponse = await getUserLibraryById(id);
+      setUserLibrary(libraryResponse.data);
+      console.log(userLibrary)
+
+      const booksResponse = await getBooks();
+      setBooks(booksResponse.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   
   const handleSearch = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -43,31 +53,40 @@ function UserDetailsPage() {
         console.log(err);
       });
   }
+ 
 
   const handleAddToLibrary = (bookId: number) => {
-    console.log('Book added to library:', bookId);
+    addBookToUserLibrary(id,bookId)
+    .then((resp)=>{
+      const book=resp.data ;
+      setUserLibrary(prevLibrary => ({
+        ...prevLibrary,
+        books: [...prevLibrary.books, book] 
+      }));
+      console.log('Book added to library:', bookId);
+
+    })
+    .catch((error)=>{
+      setError('Ce livre est déjà dans votre bibliothèque.');})
   }
 
   return (
     <div>
-      <h2>User Library:</h2>
+      {error && <Alert variant="danger">{error}</Alert>} 
+      <h2 className='title'>User Library:</h2>
       {userLibrary ? (
-        <ul>
-          {userLibrary.books ? (
-            userLibrary.books.map(book => (
-              <li key={book.id}>
-                <strong>Title:</strong> {book.title}, <strong>Author:</strong> {book.author}
-              </li>
-            ))
-          ) : (
-            <li>No books found</li>
-          )}
-        </ul>
+        <section >
+          <Row className="card--list">
+            {userLibrary.books && userLibrary.books.map((book, index) => (
+              <Cards key={index} title={book.title} author={book.author} genre={book.genre} summary={book.summary} />
+            ))}
+          </Row>
+        </section>
       ) : (
         <p>Loading user library...</p>
       )}
       <h1 className="books-title mb-4">Bibliothèque</h1>
-      <Row>
+      <Row className='container'>
         <Col md={6}>
           <Form onSubmit={handleSearch}>
             <Row>
@@ -93,7 +112,7 @@ function UserDetailsPage() {
 
         </Col>
       </Row>
-      <Table striped bordered hover className="mt-4">
+      <Table striped bordered hover className="mt-4 ms-3">
         <thead>
           <tr>
             <th>Title</th>
@@ -117,6 +136,7 @@ function UserDetailsPage() {
           ))}
         </tbody>
       </Table>
+      
     </div>
   );
 }

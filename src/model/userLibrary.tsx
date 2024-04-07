@@ -3,7 +3,7 @@ import { UserData } from "./userData";
 
 
 export interface UserLibrary {
-  id: number;
+  id?: number;
   user: UserData;
   books: BookData[];
 }
